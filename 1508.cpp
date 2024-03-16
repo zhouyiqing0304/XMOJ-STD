@@ -1,37 +1,34 @@
-#include<bits/stdc++.h>
-using namespace std;
-int f[10010],c[110],w[110],m[110],v,n;
-void completePack(int f[],int c,int w) {
-    for(int j=c; j<=v; j++)
-        f[j]=max(f[j],f[j-c]+w);
-}
-void zeroOnePack(int f[],int c,int w) {
-    for(int j=v; j>=c; --j)
-        f[j]=max(f[j],f[j-c]+w);
-}
-void multiPack(int f[],int c,int w,int m) {
-    if(c*m>=v) {
-        completePack(f,c,w);
-        return;
-    }
-    int k=1;
-    while(k<m) {
-        zeroOnePack(f,k*c,k*w);
-        m-=k;
-        k*=2;
-    }
-    zeroOnePack(f,m*c,m*w);
-}
-  
-int main() {
-    scanf("%d%d",&v,&n);
-    for(int i=1; i<=n; i++) {
-        scanf("%d%d%d",&m[i],&c[i],&w[i]);
-        m[i]=min(m[i],v/c[i]);
-    }
-    for(int i=1; i<=n; i++) {
-        multiPack(f,c[i],w[i],m[i]);
-    }
-    printf("%d\n",f[v]);
-    return 0;
+#include <bits/stdc++.h>
+using namespace std;
+long long n,v,c[110]/*体积*/,t[110]/*价值*/,m[110]/*个数*/,f[10010];
+void zeroOnePack(long long f[],long long c,long long w){
+	for(long long i=v;i>=c;i--)
+		f[i]=max(f[i],f[i-c]+w);
+}
+void completePack(long long f[],long long c,long long w){
+	for(long long i=c;i<=v;i++)
+		f[i]=max(f[i],f[i-c]+w);
+}
+void multiPack(long long f[],long long c,long long w,long long m){
+	if(c*m>=v){
+		completePack(f,c,w);
+		return;
+	}
+	long long k=1;
+	while(k<m){
+		zeroOnePack(f,k*c,k*w);
+		m-=k;k*=2;
+	}
+	zeroOnePack(f,m*c,m*w);
+}
+int main(){
+	cin>>v>>n;
+	for(long long i=1;i<=n;i++){
+		cin>>m[i]>>c[i]>>t[i];
+	}
+	for(long long i=1;i<=n;i++){
+	    multiPack(f,c[i],t[i],m[i]);
+	}
+	cout<<f[v];
+	return 0;
 }
