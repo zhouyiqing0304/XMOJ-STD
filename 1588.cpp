@@ -1,20 +1,27 @@
-#include<bits/stdc++.h>
-using namespace std;
-long long p,q,r,ans,flag;
-long long f(long long x,long long c,long long o){
-    if(x%10>=o) flag=0;
-    if(x) return f(x/10,c*o,o)+x%10*c;
-    return 0;
-}
-int main(){
-    cin>>p>>q>>r;
-    for(long long i=2;i<=16;i++){
-        flag=1;
-        if(f(p,1,i)*f(q,1,i)==f(r,1,i)&&flag){
-            cout<<i;
-            return 0;
-        }
-    }
-    cout<<0;
-    return 0;
+#include <bits/stdc++.h>
+using namespace std;
+int jz(int p,int b)
+{
+    int ret=0,bb=1;
+    while (p) {
+        if (p%10>=b) return -1;
+        ret+=p%10*bb;
+        p/=10;
+        bb*=b;
+    }
+    return ret;
+}
+int main()
+{
+    int p,q,r,b,ans=0;
+    cin>>p>>q>>r;
+    for (b=2;b<=16;++b) {
+        long long x=jz(p,b),y=jz(q,b),z=jz(r,b);
+        if (x>=0&&y>=0&&z>=0&&x*y==z) {
+            ans=b;
+            break;
+        }
+    }
+    cout<<ans<<endl;
+    return 0;
 }

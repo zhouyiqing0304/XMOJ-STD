@@ -1,21 +1,21 @@
-#include<bits/stdc++.h>
-using namespace std;
-int n,m,a[100010];
-bool fd(int x){
-	int b=binary_search(a+1,a+n+1,x);
-	if(b>0&&b<=n) return true;
-	return false;
-} 
-int main()
-{
-	cin>>n>>m;;
-	for(int i=1;i<=n;i++) cin>>a[i];
-	sort(a+1,a+n+1);
-	for(int i=1;i<=n;i++)
-		if(fd(m-a[i])==true){
-			cout<<"yes";
-			return 0;
-		}
-	cout<<"no";
-	return 0;
+#include <bits/stdc++.h>
+using namespace std;
+int n,k,a[1010];
+int main(){
+	scanf("%d%d",&n,&k);
+	for(int i=0;i<n;i++){
+		scanf("%d",&a[i]);
+	}
+	sort(a,a+n-1);
+	for(int i=0;i<n;i++){
+		for(int j=i+1;j<n;j++){
+			if(a[i]+a[j]>k) break;
+			else if(a[i]+a[j]==k){
+				cout<<"yes";
+				return 0;
+			}
+		}
+	}
+	cout<<"no";
+	return 0;
 }
